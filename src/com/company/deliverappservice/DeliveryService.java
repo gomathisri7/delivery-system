@@ -12,17 +12,21 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DeliveryService {
+// input format
+//100 3
 //PKG1 5 5 OFR001
     //PKG2 15 5 OFR002
     //PKG3 10 100 OFR003
+//2 70 200
+
+//ip2
+ //100 5
 //    PKG1 50 30 OFR001
 //    PKG2 75 125 OFFR0008
 //    PKG3 175 100 OFFR003
-//    PKG4 110 60 OFFR002
+//    PKG4 110 60 OFR002
 //    PKG5 155 95 NA
-    public static DeliveryTimeEstimationBizLogic dTBizLogic = new DeliveryTimeEstimationBizLogic();
-    public static DeliverCostBizLogic deliverCostBizLogic = new DeliverCostBizLogic();
-    public static OfferCodeFactory offerCodeFactory = new OfferCodeFactory();
+//2 70 200
     public static DeliverySystem deliverySystem = new DeliverySystem();
 
     public static void main(String[] args) {
@@ -34,6 +38,7 @@ public class DeliveryService {
         try {
             double baseCost = sc.nextDouble();
             int noOfPackages = sc.nextInt();
+            System.out.println("Enter the line with packageId weight distance and offercode ");
 
             for (int i = 0; i < noOfPackages; i++) {
                 Scanner sc2 = new Scanner(System.in);
@@ -51,7 +56,7 @@ public class DeliveryService {
                 deliverySystem.addOrder(order);
 
             }
-
+            System.out.println("Enter the no of vehicles, max speed and maxweight ");
             int noOfVehicles = sc.nextInt();
             double maxSpeed = sc.nextDouble();
             double maxWeight = sc.nextDouble();
@@ -66,9 +71,9 @@ public class DeliveryService {
         {
             System.out.println("Invalid Input Type : Please enter input in proper format");
         }
-        catch (IllegalArgumentException e)
+        catch (Exception e)
         {
-            System.out.println("Invalid Offer Code : Please enter some other Offer Code");
+            System.out.println("Some unexpected error occured - Please retry");
         }
     }
 }

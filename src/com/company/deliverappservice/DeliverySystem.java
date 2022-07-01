@@ -61,6 +61,7 @@ public class DeliverySystem {
 
     public void findDeliveryCost(double baseCost)
     {
+        System.out.println("-----Problem 1 output-----");
         for (Order order: orders) {
             deliverCostBizLogic.findDeliveryCost(baseCost, order);
         }
@@ -69,6 +70,7 @@ public class DeliverySystem {
     public void findDeliveryTime()
     {
         deliveryTimeEstimationBizLogic.findDeliveryTime(orders, vehicles);
+        System.out.println("-----Problem 2 Output-----");
         for(Order order : orders){
             System.out.println(order.getPackage().getId() +" "+ order.getDiscountApplied() + " "+order.getTotalCost()+" "+ order.getDeliveryTime());
         }

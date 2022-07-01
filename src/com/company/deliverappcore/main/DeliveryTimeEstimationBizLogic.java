@@ -11,14 +11,14 @@ public class DeliveryTimeEstimationBizLogic {
     private double maxSpeed = 70;
     WeightComparator weightComparator = new WeightComparator();
     VehicleComparator vehicleComparator = new VehicleComparator();
-    TreeMap<Double,ArrayList<Order>> map = new TreeMap<Double,ArrayList<Order>>(Collections.reverseOrder());
+    TreeMap<Double,ArrayList<Order>> sumPackageMap = new TreeMap<Double,ArrayList<Order>>(Collections.reverseOrder());
     private final DecimalFormat dfZero = new DecimalFormat("0.00");
 
     public void findDeliveryTime(ArrayList<Order> orders, ArrayList<Vehicle> vehicles)
     {
         Collections.sort(orders, weightComparator);
         sumUp(orders,200);
-        shipOrders(map, vehicles);
+        shipOrders(sumPackageMap, vehicles);
     }
 
     public void shipOrders(TreeMap<Double,ArrayList<Order>> map, ArrayList<Vehicle> vehicles)
@@ -52,7 +52,6 @@ public class DeliveryTimeEstimationBizLogic {
         return distance/speed;
     }
 
-
     private boolean isShipped(ArrayList<Order> orders)
     {
         for(Order order : orders)
@@ -64,14 +63,14 @@ public class DeliveryTimeEstimationBizLogic {
     }
 
      void sumUpRecursive(ArrayList<Order> orders, int target, ArrayList<Order> partial) {
-        double s = 0;
-        for (Order x: partial) s += x.getPackage().getWeight();
-        if (s <= target) {
-            map.put(s,partial);
+        double sum = 0;
+        for (Order x: partial) sum += x.getPackage().getWeight();
+        if (sum <= target) {
+            sumPackageMap.put(sum,partial);
         }
-        if (s > target)
+        if (sum > target)
             return;
-        for(int i=0;i<orders.size();i++) {
+        for(int i=0; i<orders.size(); i++) {
             ArrayList<Order> remaining = new ArrayList<Order>();
             Order n = orders.get(i);
             for (int j=i+1; j<orders.size();j++) remaining.add(orders.get(j));
@@ -86,7 +85,6 @@ public class DeliveryTimeEstimationBizLogic {
     }
 
 }
-
 
  class WeightComparator implements Comparator<Order> {
     public int compare(Order o1, Order o2) {
